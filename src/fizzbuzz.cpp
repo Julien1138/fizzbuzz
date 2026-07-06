@@ -1,13 +1,16 @@
 #include "fizzbuzz.hpp"
 
+#include "rules/composite_rule.hpp"
 #include "rules/divisor_rule.hpp"
 
 std::vector<std::unique_ptr<SubstitutionRule>> defaultRules()
 {
+    std::vector<std::unique_ptr<SubstitutionRule>> children;
+    children.push_back(std::make_unique<DivisorRule>(3, "Fizz"));
+    children.push_back(std::make_unique<DivisorRule>(5, "Buzz"));
+
     std::vector<std::unique_ptr<SubstitutionRule>> rules;
-    rules.push_back(std::make_unique<DivisorRule>(15, "FizzBuzz"));
-    rules.push_back(std::make_unique<DivisorRule>(3, "Fizz"));
-    rules.push_back(std::make_unique<DivisorRule>(5, "Buzz"));
+    rules.push_back(std::make_unique<CompositeRule>(std::move(children)));
     return rules;
 }
 
