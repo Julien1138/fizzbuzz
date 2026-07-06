@@ -8,26 +8,26 @@ void tearDown(void) {}
 
 void test_build_rules_matches_int1_only(void)
 {
-    auto rules = buildRules(2, "Even", 7, "Lucky");
-    TEST_ASSERT_EQUAL_STRING("Even", fizzbuzz(2, rules).c_str());
+    FizzBuzz fizzbuzz(buildRules(2, "Even", 7, "Lucky"));
+    TEST_ASSERT_EQUAL_STRING("Even", fizzbuzz.apply(2).c_str());
 }
 
 void test_build_rules_matches_int2_only(void)
 {
-    auto rules = buildRules(2, "Even", 7, "Lucky");
-    TEST_ASSERT_EQUAL_STRING("Lucky", fizzbuzz(7, rules).c_str());
+    FizzBuzz fizzbuzz(buildRules(2, "Even", 7, "Lucky"));
+    TEST_ASSERT_EQUAL_STRING("Lucky", fizzbuzz.apply(7).c_str());
 }
 
 void test_build_rules_matches_both(void)
 {
-    auto rules = buildRules(2, "Even", 7, "Lucky");
-    TEST_ASSERT_EQUAL_STRING("EvenLucky", fizzbuzz(14, rules).c_str());
+    FizzBuzz fizzbuzz(buildRules(2, "Even", 7, "Lucky"));
+    TEST_ASSERT_EQUAL_STRING("EvenLucky", fizzbuzz.apply(14).c_str());
 }
 
 void test_build_rules_matches_neither(void)
 {
-    auto rules = buildRules(2, "Even", 7, "Lucky");
-    TEST_ASSERT_EQUAL_STRING("3", fizzbuzz(3, rules).c_str());
+    FizzBuzz fizzbuzz(buildRules(2, "Even", 7, "Lucky"));
+    TEST_ASSERT_EQUAL_STRING("3", fizzbuzz.apply(3).c_str());
 }
 
 int main(void)

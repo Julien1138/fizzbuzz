@@ -6,5 +6,14 @@
 
 #include "rules/substitution_rule.hpp"
 
-std::string fizzbuzz(int n, const std::vector<std::unique_ptr<SubstitutionRule>>& rules);
-std::vector<std::string> fizzbuzzList(int limit, const std::vector<std::unique_ptr<SubstitutionRule>>& rules);
+class FizzBuzz
+{
+public:
+    explicit FizzBuzz(std::vector<std::unique_ptr<SubstitutionRule>> rules);
+
+    std::string apply(int n) const;
+    std::vector<std::string> generate(int limit) const;
+
+private:
+    std::vector<std::unique_ptr<SubstitutionRule>> m_rules;
+};

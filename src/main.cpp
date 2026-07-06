@@ -17,8 +17,8 @@ int main(int argc, char* argv[])
     const std::string str1 = argv[4];
     const std::string str2 = argv[5];
 
-    const auto rules = buildRules(int1, str1, int2, str2);
-    for (const auto& word : fizzbuzzList(limit, rules))
+    const FizzBuzz fizzbuzz(buildRules(int1, str1, int2, str2));
+    for (const auto& word : fizzbuzz.generate(limit))
     {
         std::cout << word << "\n";
     }
