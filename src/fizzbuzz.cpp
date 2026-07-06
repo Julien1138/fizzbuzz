@@ -1,12 +1,24 @@
 #include "fizzbuzz.hpp"
 
-std::string fizzbuzz(int n)
+#include "rules/divisor_rule.hpp"
+
+std::vector<std::unique_ptr<SubstitutionRule>> defaultRules()
 {
-    if (n % 15 == 0)
-        return "FizzBuzz";
-    if (n % 3 == 0)
-        return "Fizz";
-    if (n % 5 == 0)
-        return "Buzz";
+    std::vector<std::unique_ptr<SubstitutionRule>> rules;
+    rules.push_back(std::make_unique<DivisorRule>(15, "FizzBuzz"));
+    rules.push_back(std::make_unique<DivisorRule>(3, "Fizz"));
+    rules.push_back(std::make_unique<DivisorRule>(5, "Buzz"));
+    return rules;
+}
+
+std::string fizzbuzz(int n, const std::vector<std::unique_ptr<SubstitutionRule>>& rules)
+{
+    for (const auto& rule : rules)
+    {
+        if (auto result = rule->apply(n))
+        {
+            return *result;
+        }
+    }
     return std::to_string(n);
 }

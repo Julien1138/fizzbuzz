@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library(fizzbuzz_lib src/fizzbuzz.cpp)
+add_library(fizzbuzz_lib src/fizzbuzz.cpp src/rules/divisor_rule.cpp)
 target_include_directories(fizzbuzz_lib PUBLIC src)
 
 add_executable(fizzbuzz src/main.cpp)
