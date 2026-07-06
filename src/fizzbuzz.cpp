@@ -1,19 +1,5 @@
 #include "fizzbuzz.hpp"
 
-#include "rules/composite_rule.hpp"
-#include "rules/divisor_rule.hpp"
-
-std::vector<std::unique_ptr<SubstitutionRule>> defaultRules()
-{
-    std::vector<std::unique_ptr<SubstitutionRule>> children;
-    children.push_back(std::make_unique<DivisorRule>(3, "Fizz"));
-    children.push_back(std::make_unique<DivisorRule>(5, "Buzz"));
-
-    std::vector<std::unique_ptr<SubstitutionRule>> rules;
-    rules.push_back(std::make_unique<CompositeRule>(std::move(children)));
-    return rules;
-}
-
 std::string fizzbuzz(int n, const std::vector<std::unique_ptr<SubstitutionRule>>& rules)
 {
     for (const auto& rule : rules)
@@ -24,4 +10,15 @@ std::string fizzbuzz(int n, const std::vector<std::unique_ptr<SubstitutionRule>>
         }
     }
     return std::to_string(n);
+}
+
+std::vector<std::string> fizzbuzzList(int limit, const std::vector<std::unique_ptr<SubstitutionRule>>& rules)
+{
+    std::vector<std::string> result;
+    result.reserve(limit);
+    for (int i = 1; i <= limit; ++i)
+    {
+        result.push_back(fizzbuzz(i, rules));
+    }
+    return result;
 }

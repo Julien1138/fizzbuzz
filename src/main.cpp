@@ -1,13 +1,26 @@
 #include <iostream>
 
 #include "fizzbuzz.hpp"
+#include "rule_factory.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    const auto rules = defaultRules();
-    for (int i = 1; i <= 100; ++i)
+    if (argc != 6)
     {
-        std::cout << fizzbuzz(i, rules) << "\n";
+        std::cerr << "Usage: " << argv[0] << " <int1> <int2> <limit> <str1> <str2>\n";
+        return 1;
+    }
+
+    const int int1 = std::stoi(argv[1]);
+    const int int2 = std::stoi(argv[2]);
+    const int limit = std::stoi(argv[3]);
+    const std::string str1 = argv[4];
+    const std::string str2 = argv[5];
+
+    const auto rules = buildRules(int1, str1, int2, str2);
+    for (const auto& word : fizzbuzzList(limit, rules))
+    {
+        std::cout << word << "\n";
     }
     return 0;
 }

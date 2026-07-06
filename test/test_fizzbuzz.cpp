@@ -1,12 +1,13 @@
 #include "unity.h"
 
 #include "fizzbuzz.hpp"
+#include "rule_factory.hpp"
 #include "rules/divisor_rule.hpp"
 
 void setUp(void) {}
 void tearDown(void) {}
 
-// fizzbuzz() orchestration, with a custom rule set independent of defaultRules()
+// fizzbuzz() orchestration, with a custom rule set independent of buildRules()
 
 void test_fizzbuzz_returns_first_matching_rule_word(void)
 {
@@ -25,37 +26,52 @@ void test_fizzbuzz_falls_back_to_number_when_no_rule_matches(void)
     TEST_ASSERT_EQUAL_STRING("7", fizzbuzz(7, rules).c_str());
 }
 
-// fizzbuzz() behavior with defaultRules()
+// fizzbuzz() behavior with buildRules(3, "Fizz", 5, "Buzz")
 
 void test_returns_fizz_on_multiples_of_3(void)
 {
-    auto rules = defaultRules();
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
     TEST_ASSERT_EQUAL_STRING("Fizz", fizzbuzz(3, rules).c_str());
 }
 
 void test_returns_buzz_on_multiples_of_5(void)
 {
-    auto rules = defaultRules();
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
     TEST_ASSERT_EQUAL_STRING("Buzz", fizzbuzz(5, rules).c_str());
 }
 
 void test_returns_fizzbuzz_on_multiples_of_15(void)
 {
-    auto rules = defaultRules();
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
     TEST_ASSERT_EQUAL_STRING("FizzBuzz", fizzbuzz(15, rules).c_str());
 }
 
 void test_returns_number_as_string_otherwise(void)
 {
-    auto rules = defaultRules();
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
     TEST_ASSERT_EQUAL_STRING("1", fizzbuzz(1, rules).c_str());
 }
 
 void test_returns_fizzbuzz_for_zero(void)
 {
-    // 0 is a multiple of every divisor, so the first rule (FizzBuzz) wins.
-    auto rules = defaultRules();
+    // 0 is a multiple of every divisor, so both rules match.
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
     TEST_ASSERT_EQUAL_STRING("FizzBuzz", fizzbuzz(0, rules).c_str());
+}
+
+// fizzbuzzList()
+
+void test_fizzbuzz_list_returns_expected_sequence(void)
+{
+    auto rules = buildRules(3, "Fizz", 5, "Buzz");
+    auto result = fizzbuzzList(5, rules);
+
+    TEST_ASSERT_EQUAL_INT(5, result.size());
+    TEST_ASSERT_EQUAL_STRING("1", result[0].c_str());
+    TEST_ASSERT_EQUAL_STRING("2", result[1].c_str());
+    TEST_ASSERT_EQUAL_STRING("Fizz", result[2].c_str());
+    TEST_ASSERT_EQUAL_STRING("4", result[3].c_str());
+    TEST_ASSERT_EQUAL_STRING("Buzz", result[4].c_str());
 }
 
 int main(void)
@@ -68,5 +84,6 @@ int main(void)
     RUN_TEST(test_returns_fizzbuzz_on_multiples_of_15);
     RUN_TEST(test_returns_number_as_string_otherwise);
     RUN_TEST(test_returns_fizzbuzz_for_zero);
+    RUN_TEST(test_fizzbuzz_list_returns_expected_sequence);
     return UNITY_END();
 }
